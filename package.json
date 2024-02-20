@@ -39,6 +39,7 @@
 		"@fontsource/metropolis": "^5.0.7",
 		"@types/spotify-api": "^0.0.25",
 		"@unsass/breakpoint": "^2.4.0",
+		"lucide-svelte": "^0.334.0",
 		"modern-normalize": "^2.0.0",
 		"pkce-gen": "^1.1.0"
 	}
