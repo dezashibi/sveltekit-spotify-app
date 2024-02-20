@@ -49,7 +49,7 @@
 						</a>
 					</li>
 					<li>
-						<a href="/profile" target="_blank" rel="noopener noreferrer"> View Profile </a>
+						<a href="/profile"> View Profile </a>
 					</li>
 					<li>
 						<LogoutButton />
