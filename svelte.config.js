@@ -9,7 +9,7 @@ const config = {
     // preprocess: vitePreprocess(),
     preprocess: preprocess({
         scss: {
-            prependData: "@use '../styles/functions'; @use '@unsass/breakpoint';"
+            prependData: "@use 'src/styles/functions'; @use '@unsass/breakpoint';"
         }
     }),
 
@@ -19,7 +19,8 @@ const config = {
         // See https://kit.svelte.dev/docs/adapters for more information about adapters.
         adapter: adapter(),
         alias: {
-            $components: 'src/lib/components'
+            $components: 'src/lib/components',
+            $assets: 'src/assets',
         }
     }
 };
