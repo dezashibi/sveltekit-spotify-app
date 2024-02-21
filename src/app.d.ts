@@ -8,9 +8,14 @@ declare global {
         interface PageState {
             user: SpotifyApi.CurrentUsersProfileResponse | null;
             title?: string;
+            color?: string | null;
         }
         // interface Platform {}
     }
+    declare interface Window {
+        refreshPromise: Promise<Response> | null
+    }
 }
+
 
 export { };
