@@ -19,7 +19,7 @@
         "@sveltejs/vite-plugin-svelte": "^3.0.0",
         "@types/eslint": "8.56.0",
         "@types/nprogress": "^0.2.3",
-        "@types/sharp": "^0.32.0",
+        "@types/uniqid": "^5.3.4",
         "@typescript-eslint/eslint-plugin": "^6.0.0",
         "@typescript-eslint/parser": "^6.0.0",
         "eslint": "^8.56.0",
@@ -45,6 +45,7 @@
         "nprogress": "^0.2.0",
         "pkce-gen": "^1.1.0",
         "sharp": "^0.33.2",
-        "tippy.js": "^6.3.7"
+        "tippy.js": "^6.3.7",
+        "uniqid": "^5.4.0"
     }
 }

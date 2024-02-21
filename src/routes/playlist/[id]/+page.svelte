@@ -4,6 +4,7 @@
 	import { Heart } from 'lucide-svelte';
 	import type { ActionData, PageData } from './$types';
 	import { applyAction, enhance } from '$app/forms';
+	import { toasts } from '$stores';
 
 	export let data: PageData;
 	export let form: ActionData;
@@ -45,7 +46,7 @@
 		if (res.ok) {
 			tracks = { ...resJson, items: [...tracks.items, ...resJson.items] };
 		} else {
-			alert(resJson.error?.message || 'Could not load data!');
+			toasts.error(resJson.error?.message || 'Could not load data!');
 		}
 		isLoading = false;
 	};
@@ -81,10 +82,16 @@
 
 					return async ({ result }) => {
 						isLoadingFollow = false;
-						await applyAction(result);
 
 						if (result.type === 'success') {
 							isFollowing = !isFollowing;
+							await applyAction(result);
+						} else if (result.type === 'failure') {
+							toasts.error(
+								result.data?.followError ? `${result.data?.followError}` : 'Unexpected error'
+							);
+						} else {
+							await applyAction(result);
 						}
 
 						followButton.focus();
