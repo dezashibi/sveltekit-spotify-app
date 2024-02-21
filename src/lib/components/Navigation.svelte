@@ -174,6 +174,13 @@
 
 			display: none;
 
+			:global(html.no-js) & {
+				@include breakpoint.down('md') {
+					display: block;
+					height: auto;
+				}
+			}
+
 			ul {
 				padding: 0;
 				margin: 20px 0 0;
