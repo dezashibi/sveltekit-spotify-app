@@ -1,13 +1,16 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { Button, ItemPage, TrackList } from '$components';
+	import { Button, ItemPage, Modal, PlaylistForm, TrackList } from '$components';
 	import { Heart } from 'lucide-svelte';
 	import type { ActionData, PageData } from './$types';
 	import { applyAction, enhance } from '$app/forms';
 	import { toasts } from '$stores';
+	import type { ActionData as EditActionData } from './edit/$types';
+	import MicroModal from 'micromodal';
+	import { invalidate, invalidateAll } from '$app/navigation';
 
 	export let data: PageData;
-	export let form: ActionData;
+	export let form: ActionData | EditActionData;
 
 	let isLoading = false;
 	let isLoadingFollow = false;
@@ -26,7 +29,7 @@
 
 	$: {
 		filteredTracks = [];
-		tracks.items.forEach((item) => {
+		tracks.items?.forEach((item) => {
 			if (item.track) {
 				filteredTracks = [...filteredTracks, item.track];
 			}
@@ -54,7 +57,7 @@
 
 <ItemPage
 	title={playlist.name}
-	image={playlist.images.length > 0 ? playlist.images[0].url : undefined}
+	image={playlist.images && playlist.images.length > 0 ? playlist.images[0].url : undefined}
 	{color}
 	type={playlist.type}
 >
@@ -64,14 +67,24 @@
 		</p>
 		<p class="meta">
 			<span>{playlist.owner.display_name}</span>
-			<span>{followersFormatter.format(playlist.followers.total)}</span>
+			<span>{followersFormatter.format(playlist.followers.total)} Followers</span>
 			<span>{playlist.tracks.total} Tracks</span>
 		</p>
 	</div>
 
 	<div class="playlist-actions">
 		{#if data.user?.id === playlist.owner.id}
-			<Button element="a" variant="outlined">Edit Playlist</Button>
+			<Button
+				element="a"
+				variant="outlined"
+				href="/playlist/{playlist.id}/edit"
+				on:click={(e) => {
+					e.preventDefault();
+					MicroModal.show('edit-playlist-modal');
+				}}
+			>
+				Edit Playlist
+			</Button>
 		{:else if isFollowing !== null}
 			<form
 				class="follow-form"
@@ -95,6 +108,7 @@
 						}
 
 						followButton.focus();
+						invalidateAll();
 					};
 				}}
 			>
@@ -109,7 +123,7 @@
 					{isFollowing ? 'Unfollow' : 'Follow'}
 					<span class="visually-hidden">{playlist.name} playlist</span>
 				</Button>
-				{#if form?.followError}
+				{#if form && 'followForm' in form && form?.followError}
 					<p class="error">{form.followError}</p>
 				{/if}
 			</form>
@@ -117,7 +131,11 @@
 	</div>
 
 	{#if playlist.tracks.items.length > 0}
-		<TrackList tracks={filteredTracks} />
+		<TrackList
+			tracks={filteredTracks}
+			isOwner={data.user?.id === playlist.owner.id}
+			userPlaylists={data.userAllPlaylists?.filter((p) => p.owner.id === data.user?.id)}
+		/>
 		{#if tracks.next}
 			<div class="load-more">
 				<Button element="button" variant="outlined" disabled={isLoading} on:click={loadMoreTracks}>
@@ -133,8 +151,10 @@
 						variant="outlined"
 						href="{$page.url.pathname}?{new URLSearchParams({
 							page: `${Number(currentPage) - 1}`
-						}).toString()}">← Previous Page</Button
+						}).toString()}"
 					>
+						← Previous Page
+					</Button>
 				{/if}
 			</div>
 			<div class="next">
@@ -144,8 +164,10 @@
 						variant="outlined"
 						href="{$page.url.pathname}?{new URLSearchParams({
 							page: `${Number(currentPage) + 1}`
-						}).toString()}">Next Page →</Button
+						}).toString()}"
 					>
+						Next Page →
+					</Button>
 				{/if}
 			</div>
 		</div>
@@ -157,6 +179,19 @@
 		</div>
 	{/if}
 </ItemPage>
+
+<Modal id="edit-playlist-modal" title="Edit {playlist.name}">
+	<PlaylistForm
+		{playlist}
+		form={form && 'editForm' in form ? form : null}
+		action="/playlist/{playlist.id}/edit"
+		on:success={() => {
+			MicroModal.close('edit-playlist-modal');
+			// invalidate(`/api/spotify/playlists/${playlist.id}`);
+			invalidateAll();
+		}}
+	/>
+</Modal>
 
 <style lang="scss">
 	.empty-playlist {

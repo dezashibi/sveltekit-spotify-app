@@ -16,7 +16,7 @@ export const load: PageLoad = async ({ fetch, params, depends, route }) => {
 
     let color = null;
 
-    if (albumJson.images.length > 0) {
+    if (albumJson.images && albumJson.images.length > 0) {
         const colorRes = await fetch(`/api/average-color?${new URLSearchParams({
             image: albumJson.images[0].url
         }).toString()}`);

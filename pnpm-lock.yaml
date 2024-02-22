@@ -17,6 +17,9 @@ dependencies:
   lucide-svelte:
     specifier: ^0.334.0
     version: 0.334.0(svelte@4.2.11)
+  micromodal:
+    specifier: ^0.4.10
+    version: 0.4.10
   modern-normalize:
     specifier: ^2.0.0
     version: 2.0.0
@@ -52,6 +55,9 @@ devDependencies:
   '@types/eslint':
     specifier: 8.56.0
     version: 8.56.0
+  '@types/micromodal':
+    specifier: ^0.3.5
+    version: 0.3.5
   '@types/nprogress':
     specifier: ^0.2.3
     version: 0.2.3
@@ -833,6 +839,10 @@ packages:
 
   /@types/json-schema@7.0.15:
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
+    dev: true
+
+  /@types/micromodal@0.3.5:
+    resolution: {integrity: sha512-xDref7Vyx0nhfJWpeEkVrSb5l1GuHIyxfePxuHSTP3eW587Qe3hzKcBy0V+1Wjuyh21UhJH46eP43czH2ZRpGw==}
     dev: true
 
   /@types/nprogress@0.2.3:
@@ -1738,6 +1748,11 @@ packages:
       braces: 3.0.2
       picomatch: 2.3.1
     dev: true
+
+  /micromodal@0.4.10:
+    resolution: {integrity: sha512-BUrEnzMPFBwK8nOE4xUDYHLrlGlLULQVjpja99tpJQPSUEWgw3kTLp1n1qv0HmKU29AiHE7Y7sMLiRziDK4ghQ==}
+    engines: {node: '>=10'}
+    dev: false
 
   /min-indent@1.0.1:
     resolution: {integrity: sha512-I9jwMn07Sy/IwOj3zVkVik2JTvgpaykDZEigL6Rx6N9LbMywwUSMtxET+7lVoDLLd3O3IXwJwvuuns8UB/HeAg==}
