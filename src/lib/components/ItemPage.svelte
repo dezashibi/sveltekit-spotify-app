@@ -14,7 +14,7 @@
 	/>
 	<div class="cover">
 		{#if image}
-			<img src={image} alt={title} />
+			<img class="cover-img" src={image} alt={title} />
 		{:else}
 			<div class="cover-placeholder">
 				<Music focusable="false" aria-hidden color="var(--light-gray)" />
@@ -22,7 +22,8 @@
 		{/if}
 	</div>
 	<div class="info">
-		{#if type} <p class="type">{type}</p>{/if}
+		{#if type}
+			<p class="type">{type}</p>{/if}
 		<h1 class="title">{title}</h1>
 		<slot name="meta" />
 	</div>
