@@ -5,7 +5,7 @@
 
 	let isRetrying = false;
 
-	const retryRoutes = ['/album/[id]', '/playlist/[id]'];
+	const retryRoutes = ['/album/[id]', '/playlist/[id]', '/artist/[id]', '/search/[query]'];
 </script>
 
 <svelte:head>
